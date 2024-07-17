@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PostResource;
+use App\Models\Blog;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
@@ -21,8 +22,14 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $blog_id = $request->query('blog_id');
+        if ($blog_id){
+            $blog = Blog::find($blog_id);
+            $posts =  $blog?->posts ? PostResource::collection($blog->posts) : [];
+            return $this->success($posts);
+        }
         $posts = Post::orderBy('created_at','desc')->get();
         return $this->success(PostResource::collection($posts));
     }
