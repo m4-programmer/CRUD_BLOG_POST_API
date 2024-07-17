@@ -36,7 +36,12 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        return $this->success($blog);
+        $data = [
+            'title'=>$blog->title,
+            'total_posts'=>$blog->posts->count(),
+            'posts'=>$blog->posts
+        ];
+        return $this->success($data);
     }
 
 
