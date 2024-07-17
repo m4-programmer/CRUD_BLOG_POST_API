@@ -38,10 +38,10 @@ class ImageService
 
             }
             $imageName = time() . '-'. Str::random(5) . '.' . $image->getClientOriginalExtension();
-            $image->move("assets/uploads/images/{$user->id}", $imageName);
+            $image->move("assets/uploads/images", $imageName);
             App::isLocal() && Log::info("Image uploaded successfully: $imageName");
 
-            return "assets/uploads/images/{$user->id}/" .$imageName;
+            return "assets/uploads/images/" .$imageName;
         }
         App::isLocal() && Log::info("No Image uploaded");
         return null;
